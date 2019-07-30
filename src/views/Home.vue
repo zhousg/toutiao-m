@@ -9,7 +9,7 @@
         ref="list"
         v-model="upLoading"
         :offset="100"
-        :immediate-check="true"
+        :immediate-check="false"
         :finished="finished"
         finished-text="没有更多了"
         @load="onLoad"
@@ -41,6 +41,12 @@ export default {
   },
   computed: {
     ...mapState(['myChannel'])
+  },
+  watch: {
+    myChannel () {
+      this.reqParams.channel_id = 0
+      this.$refs.list.check()
+    }
   },
   created () {
     this.getMyChannel()
