@@ -1,12 +1,11 @@
 <template>
   <div class="app-container">
-    <my-header></my-header>
     <div class="app-content">
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
     </div>
-    <div class="app-footer">
+    <div class="app-footer" v-show="$store.state.tabBarVisible">
       <van-tabbar v-model="active">
         <van-tabbar-item replace :to="{name:'home'}" icon="home-o">首页</van-tabbar-item>
         <van-tabbar-item replace :to="{name:'find'}" icon="chat-o">问答</van-tabbar-item>

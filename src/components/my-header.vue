@@ -16,10 +16,4 @@ export default {
 img {
   vertical-align: middle;
 }
-.van-nav-bar__text {
-  font-size: 12px;
-  &:active {
-    background: #3296fa;
-  }
-}
 </style>

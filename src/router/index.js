@@ -6,6 +6,7 @@ import Layout from '@/views/Layout.vue'
 import Home from '@/views/Home.vue'
 import Video from '@/views/Video.vue'
 import Find from '@/views/Find.vue'
+import Detail from '@/views/Detail.vue'
 import Search from '@/views/Search.vue'
 import SearchResult from '@/views/Search-Result.vue'
 import User from '@/views/users/Index.vue'
@@ -23,6 +24,7 @@ const router = new VueRouter({
       component: Layout,
       children: [
         { name: 'home', path: '/home', component: Home },
+        { name: 'detail', path: '/detail', component: Detail },
         { name: 'video', path: '/video', component: Video },
         { name: 'find', path: '/find', component: Find },
         { name: 'user', path: '/user', component: User }

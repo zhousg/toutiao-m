@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title>hm-toutiao-m</title>
+    <script type="text/javascript">
+      function plusReady(){
+        plus.navigator.setStatusBarBackground('#3296fa');
+      }
+      if(window.plus){
+        plusReady();
+      }else{
+        document.addEventListener('plusready', plusReady, false);
+      }
+    </script>
   </head>
   <body>
     <noscript>

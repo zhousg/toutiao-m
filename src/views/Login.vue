@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div class="wrapper">
     <my-header></my-header>
     <van-cell-group>
       <van-field v-model="mobile" required label="手机号" placeholder="请输入手机号" />
@@ -14,7 +14,7 @@
       />
     </van-cell-group>
     <div class="box">
-      <van-button type="info" @click="login()" size="small">登 录</van-button>
+      <van-button type="info" block @click="login()" size="small">登 录</van-button>
     </div>
   </div>
 </template>
@@ -47,10 +47,5 @@ export default {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
-  .van-button{
-    width: 100%;
-    height: 32px;
-    line-height: 30px;
-  }
 }
 </style>

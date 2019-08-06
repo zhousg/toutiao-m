@@ -1,28 +1,42 @@
 <template>
-  <div class="home-wrapper" ref="wrapper" @scroll="scroll()">
-    <van-tabs v-model="reqParams.channel_id" @change="changeTab">
+  <div class="wrapper">
+    <my-header></my-header>
+    <van-tabs v-model="reqParams.channel_id" @change="changeTab" swipeable>
       <van-tab :key="item.id" v-for="item in myChannel" :title="item.name" :name="item.id"></van-tab>
     </van-tabs>
     <my-tag></my-tag>
-    <van-pull-refresh v-model="downLoading" @refresh="onRefresh">
-      <van-list
-        ref="list"
-        v-model="upLoading"
-        :offset="100"
-        :immediate-check="false"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <van-cell v-for="item in list" :key="item.id" :title="item.title" />
-      </van-list>
-    </van-pull-refresh>
-    <van-icon name="upgrade" @click="top()"></van-icon>
+    <div class="scroll-wrapper" ref="wrapper" @scroll="scroll()">
+      <van-pull-refresh v-model="downLoading" @refresh="onRefresh">
+        <van-list
+          ref="list"
+          v-model="upLoading"
+          :offset="100"
+          :immediate-check="false"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <van-cell v-for="item in list" :key="item.id" @click="$router.push('/detail')">
+            <p class="title van-ellipsis">{{item.title}}</p>
+            <van-image
+              :width="item.cover.type === 1 ? '100%' : '33.3333%'"
+              fit="cover"
+              v-for="imgUrl in item.cover.images"
+              :key="imgUrl"
+              :src="imgUrl"
+              lazy-load
+            />
+            <p class="footer">{{item.pubdate|calcTime}}</p>
+          </van-cell>
+        </van-list>
+      </van-pull-refresh>
+      <van-icon name="upgrade" @click="top()"></van-icon>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { getArticles } from '@/api/article'
 export default {
   data () {
@@ -55,9 +69,12 @@ export default {
   activated () {
     // 还原大容器 卷曲的高度
     this.$refs.wrapper.scrollTop = this.scrollTop
+    // 显示tabbar
+    this.toggleTabBar(true)
   },
   methods: {
     ...mapActions(['getMyChannel']),
+    ...mapMutations(['toggleTabBar']),
     scroll () {
       // 滚动时候监听  卷曲的高度
       this.scrollTop = this.$refs.wrapper.scrollTop
@@ -128,14 +145,20 @@ export default {
 }
 </script>
 
-<style scoped>
-.home-wrapper {
+<style scoped lang="less">
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.scroll-wrapper {
   position: relative;
   width: 100%;
   height: 100%;
   overflow-y: auto;
 }
-.van-icon{
+.van-icon {
   position: fixed;
   z-index: 999;
   right: 20px;
@@ -143,5 +166,22 @@ export default {
   font-size: 30px;
   color: #fff;
   text-shadow: 0 0 2px #000;
+}
+.van-cell {
+  padding: 10px;
+  .van-image {
+    height: 100px;
+  }
+  p {
+    margin: 0;
+    &.title {
+      font-size: 16px;
+      color: #555;
+    }
+    &.footer {
+      font-size: 12px;
+      color: #ccc;
+    }
+  }
 }
 </style>
