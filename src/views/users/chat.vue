@@ -2,13 +2,15 @@
   <div class="page-user-chat">
     <van-nav-bar fixed left-arrow @click-left="$router.back()" title="小智同学"></van-nav-bar>
     <div class="chat-list">
-      <div class="chat-item left">
-        <van-image fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-        <div class="chat-pao">ewqewq</div>
-      </div>
-      <div class="chat-item right">
-        <div class="chat-pao">ewqewq</div>
-        <van-image  fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
+      <div
+        class="chat-item"
+        :class="{left:item.name==='xz',right:item.name==='self'}"
+        v-for="(item,i) in list"
+        :key="i"
+      >
+        <van-image v-if="item.name==='xz'" fit="cover" round :src="xzAvatar" />
+        <div class="chat-pao">{{item.msg}}</div>
+        <van-image v-if="item.name==='self'" fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
       </div>
     </div>
     <div class="reply-container van-hairline--top">
@@ -21,15 +23,43 @@
 </template>
 
 <script>
+import xzAvatar from '@/assets/images/xz.png'
+import io from 'socket.io-client'
+import { userLocal } from '@/utils/local'
 export default {
   data () {
     return {
       value: '',
+      list: null,
+      xzAvatar,
       commentLoading: false
     }
   },
+  activated () {
+    this.list = []
+    this.socket = io('http://ttapi.research.itcast.cn', {
+      query: {
+        token: userLocal.getUser().token
+      }
+    })
+    this.socket.on('connect', () => {
+      // 建了链接后默认  小智给你打招呼
+      this.list.push({ name: 'xz', msg: '你好' })
+    })
+    this.socket.on('message', data => {
+      // 接受机器人消息
+      this.list.push({ name: 'xz', msg: data.msg })
+    })
+  },
+  deactivated () {
+    this.socket.close()
+  },
   methods: {
-    send () {}
+    send () {
+      this.socket.emit('message', { msg: this.value, timestamp: Date.now() })
+      this.list.push({ name: 'self', msg: this.value })
+      this.value = ''
+    }
   }
 }
 </script>
@@ -46,16 +76,16 @@ export default {
   .chat-list {
     height: 100%;
     overflow-y: scroll;
-    .chat-item{
+    .chat-item {
       padding: 10px;
-      .van-image{
+      .van-image {
         vertical-align: top;
       }
-      .chat-pao{
+      .chat-pao {
         vertical-align: top;
         display: inline-block;
-        min-width: 40px;
-        max-width: 70%;
+        min-width: 20px;
+        max-width: 60%;
         min-height: 40px;
         line-height: 40px;
         border: 0.5px solid #c2d9ea;
@@ -66,43 +96,43 @@ export default {
         word-break: break-all;
         font-size: 14px;
         color: #333;
-        &::before{
+        &::before {
           content: "";
           width: 10px;
           height: 10px;
           position: absolute;
           top: 13px;
-          border-top:1px solid #c2d9ea;
-          border-right:1px solid #c2d9ea;
+          border-top: 1px solid #c2d9ea;
+          border-right: 1px solid #c2d9ea;
           background: #e0effb;
         }
       }
     }
   }
 }
-.chat-item.right{
+.chat-item.right {
   text-align: right;
-  .chat-pao{
+  .chat-pao {
     margin-left: 0;
     margin-right: 15px;
-    &::before{
+    &::before {
       right: -6px;
       transform: rotate(45deg);
     }
   }
 }
-.chat-item.left{
+.chat-item.left {
   text-align: left;
-  .chat-pao{
+  .chat-pao {
     margin-left: 15px;
     margin-right: 0;
-    &::before{
+    &::before {
       left: -6px;
       transform: rotate(-135deg);
     }
   }
 }
-.van-image{
+.van-image {
   width: 40px;
   height: 40px;
 }
