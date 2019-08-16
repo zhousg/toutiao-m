@@ -58,8 +58,7 @@ export default {
   methods: {
     scrollBottom () {
       this.$nextTick(() => {
-        // 这是写死的 要动态
-        this.$refs.list.scrollTop = 20000
+        this.$refs.list.scrollTop = this.$refs.list.scrollHeight
       })
     },
     send () {
