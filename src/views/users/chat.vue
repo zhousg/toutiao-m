@@ -1,7 +1,7 @@
 <template>
   <div class="page-user-chat">
     <van-nav-bar fixed left-arrow @click-left="$router.back()" title="小智同学"></van-nav-bar>
-    <div class="chat-list" ref="list">
+    <div class="chat-list"  ref="list">
       <div
         class="chat-item"
         :class="{left:item.name==='xz',right:item.name==='self'}"
@@ -57,8 +57,10 @@ export default {
   },
   methods: {
     scrollBottom () {
-      // 这是写死的 要动态获取
-      this.$refs.list.scrollTop = 20000
+      this.$nextTick(() => {
+        // 这是写死的 要动态
+        this.$refs.list.scrollTop = 20000
+      })
     },
     send () {
       this.socket.emit('message', { msg: this.value, timestamp: Date.now() })
@@ -74,7 +76,6 @@ export default {
 .page-user-chat {
   height: 100%;
   width: 100%;
-  overflow-y: scroll;
   position: absolute;
   left: 0;
   top: 0;
