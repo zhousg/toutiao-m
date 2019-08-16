@@ -6,8 +6,7 @@ import store from '@/store'
 import filter from '@/filter'
 import utils from '@/utils/vue'
 import components from '@/components'
-
-import 'lib-flexible'
+import 'amfe-flexible'
 
 import 'vant/lib/index.css'
 import '@/styles/index.less'

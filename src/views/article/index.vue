@@ -18,21 +18,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <van-button round size="small" hairline type="danger" plain icon="delete">不喜欢</van-button>
       </div>
-      <div class="comment van-hairline--top">
-        <div class="item van-hairline--bottom">
-          <van-image round width="1rem" height="1rem" fit="fill" :src="article.aut_photo" />
-          <div class="info"></div>
-        </div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div class="item van-hairline--bottom">js优化</div>
-        <div style="text-align:center;margin-top:5px">
-          <van-button size="mini" plain>更多评论</van-button>
-        </div>
-      </div>
+      <comment :articleId="article.art_id" :key="article.art_id"></comment>
     </div>
     <div v-else class="error">
       <p>网络超时，点击 <a href="#" @click.prevent="loadData()">刷新</a> 试一试。</p>
@@ -41,8 +27,10 @@
 </template>
 
 <script>
+import comment from './components/comment.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+  components: { comment },
   data () {
     return {
       loading: true,
@@ -132,6 +120,7 @@ export default {
     word-break: break-all;
     /deep/ img{
       max-width:100%;
+      background: #f9f9f9;
     }
   }
 }

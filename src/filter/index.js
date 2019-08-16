@@ -5,6 +5,7 @@ const formatTime = (value) => {
 }
 // 计算距离当前时间返回字符串 刚刚 xx分钟前 xx小时前 xx天前
 const calcTime = (value) => {
+  if (!value) return ''
   const time = new Date(value)
   const now = Date.now()
   // 计算时间毫秒差

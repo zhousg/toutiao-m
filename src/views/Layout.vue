@@ -7,10 +7,10 @@
     </div>
     <div class="app-footer" v-show="$store.state.tabBarVisible">
       <van-tabbar v-model="active">
-        <van-tabbar-item replace :to="{name:'home'}" icon="home-o">首页</van-tabbar-item>
-        <van-tabbar-item replace :to="{name:'find'}" icon="chat-o">问答</van-tabbar-item>
-        <van-tabbar-item replace :to="{name:'video'}" icon="video-o">视频</van-tabbar-item>
-        <van-tabbar-item replace :to="{name:'user'}" icon="user-circle-o" dot>我的</van-tabbar-item>
+        <van-tabbar-item name="/" replace :to="{name:'home'}" icon="home-o">首页</van-tabbar-item>
+        <van-tabbar-item name="/find" replace :to="{name:'find'}" icon="chat-o">问答</van-tabbar-item>
+        <van-tabbar-item name="/video" replace :to="{name:'video'}" icon="video-o">视频</van-tabbar-item>
+        <van-tabbar-item name="/user" replace :to="{name:'user'}" icon="user-circle-o" dot>我的</van-tabbar-item>
       </van-tabbar>
     </div>
   </div>
@@ -20,7 +20,7 @@
 export default {
   data () {
     return {
-      active: 0
+      active: this.$route.path
     }
   }
 }

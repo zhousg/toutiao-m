@@ -16,13 +16,13 @@
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <van-cell v-for="item in list" :key="item.id" @click="$router.push('/detail')">
+          <van-cell v-for="item in list" :key="item.art_id.toString()" @click="$router.push('/detail/'+item.art_id)">
             <p class="title van-ellipsis">{{item.title}}</p>
             <van-image
               :width="item.cover.type === 1 ? '100%' : '33.3333%'"
               fit="cover"
-              v-for="imgUrl in item.cover.images"
-              :key="imgUrl"
+              v-for="(imgUrl,i) in item.cover.images"
+              :key="i"
               :src="imgUrl"
               lazy-load
             />
@@ -80,16 +80,18 @@ export default {
       this.scrollTop = this.$refs.wrapper.scrollTop
     },
     top () {
-      // 简易向上滚动 300ms 动画
-      const step = Math.ceil(this.scrollTop / 30)
-      const timer = window.setInterval(() => {
-        this.scrollTop -= step
-        if (this.scrollTop <= 0) {
-          window.clearInterval(timer)
-          this.scrollTop = 0
-        }
-        this.$refs.wrapper.scrollTop = this.scrollTop
-      }, 10)
+      if (this.$refs.wrapper) {
+        // 简易向上滚动 300ms 动画
+        const step = Math.ceil(this.scrollTop / 30)
+        const timer = window.setInterval(() => {
+          this.scrollTop -= step
+          if (this.scrollTop < 0) {
+            window.clearInterval(timer)
+            this.scrollTop = 0
+          }
+          this.$refs.wrapper.scrollTop = this.scrollTop
+        }, 10)
+      }
     },
     changeTab (name) {
       this.reqParams.channel_id = name
@@ -131,15 +133,17 @@ export default {
         data: { data }
       } = await getArticles(this.reqParams)
       this.reqParams.timestamp = data.pre_timestamp
+      return data
+
       // 处理最新时间无数据   接口问题
-      if (!data.results.length && data.pre_timestamp) {
-        const {
-          data: { data: newData }
-        } = await getArticles(this.reqParams)
-        return newData
-      } else {
-        return data
-      }
+      // if (!data.results.length && data.pre_timestamp) {
+      //   const {
+      //     data: { data: newData }
+      //   } = await getArticles(this.reqParams)
+      //   return newData
+      // } else {
+      //   return data
+      // }
     }
   }
 }

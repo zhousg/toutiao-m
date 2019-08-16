@@ -7,9 +7,10 @@ import { refreshToken } from '@/api/user'
 
 const instance = axios.create({
   baseURL: 'http://ttapi.research.itcast.cn/app/v1_0/',
+  // timeout: 10000,
   transformResponse: [data => {
     try {
-      return bigInt.parse(data)
+      return bigInt({ 'storeAsString': true }).parse(data)
     } catch (err) {
       return data
     }

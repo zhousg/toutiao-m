@@ -6,3 +6,11 @@ import request from '@/utils/request'
 export const getArticles = data => {
   return request.get('http://ttapi.research.itcast.cn/app/v1_1/articles', { params: data })
 }
+
+/**
+ * 获取文章详情
+ * @param {Number} id - 文章ID
+ */
+export const getArticle = id => {
+  return request.get(`articles/${id}`)
+}
