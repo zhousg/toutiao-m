@@ -41,7 +41,7 @@ const router = new VueRouter({
 const loginPath = ['/user', '/user/profile', '/user/chat']
 router.beforeEach((to, from, next) => {
   // 如果未登录 且跳转路径不是 /login  重定向到login
-  if (loginPath.includes(to.path) && !userLocal.getUser().token) return next('/login')
+  if (loginPath.includes(to.path) && !userLocal.getUser().token) return next('/login?returnUrl=' + to.path)
   next()
 })
 

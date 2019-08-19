@@ -4,7 +4,7 @@
   </div>
   <van-action-sheet class="bar_box" v-else v-model="open" title="编辑频道">
     <div class="item">
-      <p>我的频道：</p>
+      <p>我的频道：<span class="go-text">登录后才可编辑</span></p>
       <van-button
         @click="del(item.id)"
         :key="item.id"
@@ -73,6 +73,10 @@ export default {
 </script>
 
 <style scoped lang="less">
+.go-text{
+  font-size: 8px;
+  color: #666;
+}
 .van-action-sheet__header {
   background: #3296fa;
   color: #fff;

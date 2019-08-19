@@ -40,11 +40,11 @@ instance.interceptors.response.use(res => {
         return instance(err.config)
       } catch (e) {
         // 去登录页
-        return router.push('/login')
+        return router.push('/login?returnUrl=' + router.currentRoute.path)
       }
     } else {
       // 去登录页
-      return router.push('/login')
+      return router.push('/login?returnUrl=' + router.currentRoute.path)
     }
   }
   return Promise.reject(err)

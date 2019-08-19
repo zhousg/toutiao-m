@@ -163,6 +163,9 @@ export default {
   color: #fff;
   text-shadow: 0 0 2px #000;
 }
+.van-tabs{
+  padding-right: 30px;
+}
 .van-cell {
   padding: 10px;
   .van-image {
