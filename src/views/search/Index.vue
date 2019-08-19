@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import { searchLocal } from '@/utils/local';
-import { getSuggestion } from '@/api/article';
-import { setTimeout } from 'timers';
+import { searchLocal } from '@/utils/local'
+import { getSuggestion } from '@/api/article'
+import { setTimeout } from 'timers'
 export default {
   data () {
     return {
@@ -49,10 +49,6 @@ export default {
       timer: null,
       suggestion: []
     }
-  },
-  activated () {
-    this.q = '';
-    this.historyList = searchLocal.getHistory()
   },
   watch: {
     q (nowVal, oldVal) {

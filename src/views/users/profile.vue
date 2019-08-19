@@ -61,7 +61,7 @@ export default {
   methods: {
     openDate () {
       this.dateShow = true
-      this.nowDate = new Date(this.userProfile.birthday)
+      this.nowDate = new Date(this.userProfile.birthday || new Date())
     },
     confirmDate (value) {
       this.dateShow = false

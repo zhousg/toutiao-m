@@ -1,11 +1,10 @@
 <template>
   <div class="app-container">
+    <van-nav-bar v-if="$route.path!=='/user'" right-text="搜索" @click-right="$router.push('/search')" @click-left="$router.back()" title="黑马头条"></van-nav-bar>
     <div class="app-content">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </div>
-    <div class="app-footer" v-show="$store.state.tabBarVisible">
+    <div class="app-footer">
       <van-tabbar v-model="active">
         <van-tabbar-item name="/home" replace :to="{name:'home'}" icon="home-o">首页</van-tabbar-item>
         <van-tabbar-item name="/find" replace :to="{name:'find'}" icon="chat-o">问答</van-tabbar-item>

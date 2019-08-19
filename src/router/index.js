@@ -21,14 +21,14 @@ const router = new VueRouter({
     { name: 'welcome', path: '/', redirect: '/home' },
     { name: 'search', path: '/search', component: Search },
     { name: 'result', path: '/result', component: SearchResult },
-    { name: 'detail', path: '/detail/:id', component: Detail },
+    { name: 'detail', path: '/detail/:id', component: Detail, meta: { keepAlive: true } },
     { name: 'user-profile', path: '/user/profile', component: Profile },
     { name: 'user-chat', path: '/user/chat', component: Chat },
     {
       path: '/home',
       component: Layout,
       children: [
-        { name: 'home', path: '/home', component: Home },
+        { name: 'home', path: '/home', component: Home, meta: { keepAlive: true } },
         { name: 'video', path: '/video', component: Video },
         { name: 'find', path: '/find', component: Find },
         { name: 'user', path: '/user', component: User }
@@ -37,9 +37,10 @@ const router = new VueRouter({
   ]
 })
 
+const loginPath = ['/user', '/user/profile', '/user/chat']
 router.beforeEach((to, from, next) => {
   // 如果未登录 且跳转路径不是 /login  重定向到login
-  if (to.path !== '/login' && !userLocal.getUser().token) return next('/login')
+  if (loginPath.includes(to.path) && !userLocal.getUser().token) return next('/login')
   next()
 })
 

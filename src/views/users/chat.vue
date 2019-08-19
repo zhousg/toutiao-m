@@ -35,7 +35,7 @@ export default {
       commentLoading: false
     }
   },
-  activated () {
+  created () {
     this.list = []
     this.socket = io('http://ttapi.research.itcast.cn', {
       query: {

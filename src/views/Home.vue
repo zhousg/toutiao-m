@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <my-header></my-header>
     <van-tabs v-model="reqParams.channel_id" @change="changeTab" swipeable>
       <van-tab :key="item.id" v-for="item in myChannel" :title="item.name" :name="item.id"></van-tab>
     </van-tabs>
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { getArticles } from '@/api/article'
 export default {
   data () {
@@ -73,12 +72,9 @@ export default {
   activated () {
     // 还原大容器 卷曲的高度
     this.$refs.wrapper.scrollTop = this.scrollTop
-    // 显示tabbar
-    this.toggleTabBar(true)
   },
   methods: {
     ...mapActions(['getMyChannel']),
-    ...mapMutations(['toggleTabBar']),
     scroll () {
       // 滚动时候监听  卷曲的高度
       this.scrollTop = this.$refs.wrapper.scrollTop

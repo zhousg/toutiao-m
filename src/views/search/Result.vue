@@ -46,20 +46,6 @@ export default {
       }
     }
   },
-  activated () {
-    this.list = []
-    this.error = false
-    this.loading = false
-    this.finished = false
-    this.repParams = {
-      q: this.$route.query.q,
-      page: 1,
-      per_page: 20
-    }
-    this.$nextTick(() => {
-      this.$refs.list.check()
-    })
-  },
   methods: {
     onLoad () {
       getSearchResult(this.repParams).then(res => {
