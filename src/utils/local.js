@@ -13,3 +13,27 @@ export const userLocal = {
     window.localStorage.removeItem(USER_KEY)
   }
 }
+// 搜索记录
+const SEARCH_KEY = 'hm-toutiao-m-search-key'
+export const searchLocal = {
+  getHistory () {
+    return JSON.parse(window.localStorage.getItem(SEARCH_KEY) || '[]')
+  },
+  setHistory (text) {
+    const oldList = this.getHistory()
+    oldList.unshift(text)
+    // 去重
+    const set = new Set(oldList)
+    const newList = Array.from(set)
+    window.localStorage.setItem(SEARCH_KEY, JSON.stringify(newList))
+  },
+  removeHistory (text) {
+    const list = this.getHistory()
+    const index = list.findIndex(item => item === text)
+    list.splice(index, 1)
+    window.localStorage.setItem(SEARCH_KEY, JSON.stringify(list))
+  },
+  clearHistory () {
+    window.localStorage.setItem(SEARCH_KEY, '[]')
+  }
+}

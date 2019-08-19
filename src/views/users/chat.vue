@@ -1,7 +1,7 @@
 <template>
   <div class="page-user-chat">
     <van-nav-bar fixed left-arrow @click-left="$router.back()" title="小智同学"></van-nav-bar>
-    <div class="chat-list"  ref="list">
+    <div class="chat-list" ref="list">
       <div
         class="chat-item"
         :class="{left:item.name==='xz',right:item.name==='self'}"

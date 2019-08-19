@@ -14,3 +14,20 @@ export const getArticles = data => {
 export const getArticle = id => {
   return request.get(`articles/${id}`)
 }
+
+/**
+ * 获取联想建议
+ * @param {Number} q - 搜索关键字
+ */
+export const getSuggestion = (q) => {
+  return request.get('suggestion', { params: { q } })
+}
+
+/**
+ * 获取搜索结果
+ * @param {*} params 查询参数对象 page 当前页 per_page 一页多少条 q 搜索关键字
+ */
+export const getSearchResult = (params) => {
+  console.log(params)
+  return request.get('search', { params })
+}

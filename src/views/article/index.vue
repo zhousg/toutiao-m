@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import comment from './components/comment.vue'
+import comment from './components/Comment.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
+
 export default {
   components: { comment },
   data () {

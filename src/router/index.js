@@ -6,12 +6,12 @@ import Layout from '@/views/Layout.vue'
 import Home from '@/views/Home.vue'
 import Video from '@/views/Video.vue'
 import Find from '@/views/Find.vue'
-import Detail from '@/views/article'
-import Search from '@/views/Search.vue'
-import SearchResult from '@/views/Search-Result.vue'
+import Detail from '@/views/article/Index.vue'
+import Search from '@/views/search/Index.vue'
+import SearchResult from '@/views/search/Result.vue'
 import User from '@/views/users/Index.vue'
-import Profile from '@/views/users/profile.vue'
-import Chat from '@/views/users/chat.vue'
+import Profile from '@/views/users/Profile.vue'
+import Chat from '@/views/users/Chat.vue'
 
 Vue.use(VueRouter)
 

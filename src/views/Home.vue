@@ -26,7 +26,11 @@
               :src="imgUrl"
               lazy-load
             />
-            <p class="footer">{{item.pubdate|calcTime}}</p>
+            <p class="footer">
+              <span>{{item.aut_name}}</span>
+              <span>{{item.comm_count}}评论</span>
+              <span>{{item.pubdate|calcTime}}</span>
+            </p>
           </van-cell>
         </van-list>
       </van-pull-refresh>
@@ -185,6 +189,9 @@ export default {
     &.footer {
       font-size: 12px;
       color: #ccc;
+      span{
+        padding-right: 10px;
+      }
     }
   }
 }
