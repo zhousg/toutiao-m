@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import { userLocal } from '@/utils/local'
 import Login from '@/views/Login.vue'
 import Layout from '@/views/Layout.vue'
-import Home from '@/views/Home.vue'
+import Home from '@/views/home/Index'
 import Video from '@/views/Video.vue'
 import Find from '@/views/Find.vue'
 import Detail from '@/views/article/Index.vue'
@@ -37,6 +37,7 @@ const router = new VueRouter({
   ]
 })
 
+// 需要登录才能访问的页面
 const loginPath = ['/user', '/user/profile', '/user/chat']
 router.beforeEach((to, from, next) => {
   // 如果未登录 且跳转路径不是 /login  重定向到login

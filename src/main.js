@@ -5,18 +5,13 @@ import router from '@/router'
 import store from '@/store'
 import filter from '@/filter'
 import utils from '@/utils/vue'
-import components from '@/components'
 import 'amfe-flexible'
-
 import 'vant/lib/index.css'
 import '@/styles/index.less'
-
 import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueLazyload)
-
 Vue.use(Vant)
-Vue.use(components)
 Vue.use(utils)
 Vue.use(filter)
 Vue.config.productionTip = false

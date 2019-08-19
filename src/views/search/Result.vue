@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-nav-bar left-arrow @click-left="$router.back()" title="搜索结果"></van-nav-bar>
+    <van-nav-bar fixed left-arrow @click-left="$router.back()" title="搜索结果"></van-nav-bar>
     <van-list
       ref="list"
       v-model="loading"
@@ -9,6 +9,7 @@
       finished-text="没有更多了"
       error-text="请求失败，点击重新加载"
       @load="onLoad"
+      style="padding-top:46px"
     >
       <van-cell v-for="item in list" :key="item.art_id" @click="$router.push('/detail/'+item.art_id)">
         <p class="title van-ellipsis">{{item.title}}</p>

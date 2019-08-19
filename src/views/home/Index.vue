@@ -3,7 +3,7 @@
     <van-tabs v-model="reqParams.channel_id" @change="changeTab" swipeable>
       <van-tab :key="item.id" v-for="item in myChannel" :title="item.name" :name="item.id"></van-tab>
     </van-tabs>
-    <my-tag></my-tag>
+    <channel></channel>
     <div class="scroll-wrapper" ref="wrapper" @scroll="scroll()">
       <van-pull-refresh v-model="downLoading" @refresh="onRefresh">
         <van-list
@@ -41,7 +41,9 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { getArticles } from '@/api/article'
+import Channel from './components/Channel'
 export default {
+  components: { Channel },
   data () {
     return {
       reqParams: {
@@ -134,16 +136,6 @@ export default {
       } = await getArticles(this.reqParams)
       this.reqParams.timestamp = data.pre_timestamp
       return data
-
-      // 处理最新时间无数据   接口问题
-      // if (!data.results.length && data.pre_timestamp) {
-      //   const {
-      //     data: { data: newData }
-      //   } = await getArticles(this.reqParams)
-      //   return newData
-      // } else {
-      //   return data
-      // }
     }
   }
 }
