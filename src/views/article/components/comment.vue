@@ -162,7 +162,7 @@ export default {
 .reply_dailog {
   height: 100%;
   max-height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .reply-container{
   position: fixed;

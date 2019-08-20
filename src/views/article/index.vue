@@ -28,18 +28,15 @@
 
 <script>
 import comment from './components/Comment.vue'
-import { mapState, mapMutations, mapActions } from 'vuex'
-
+import { getArticle } from '@/api/article'
 export default {
   components: { comment },
   data () {
     return {
       loading: true,
-      scrollTop: 0
+      scrollTop: 0,
+      article: {}
     }
-  },
-  computed: {
-    ...mapState(['article'])
   },
   activated () {
     // 如果之前浏览过   不会再次加载   且会停留在之前阅读位置  注意：只会记录一篇文章
@@ -57,14 +54,12 @@ export default {
     async loadData () {
       try {
         this.loading = true
-        this.setArticle({})
-        await this.getArticle(this.$route.params.id)
+        const { data: { data } } = await getArticle(this.$route.params.id)
+        this.article = data
       } finally {
         this.loading = false
       }
-    },
-    ...mapMutations(['setArticle']),
-    ...mapActions(['getArticle'])
+    }
   }
 }
 </script>

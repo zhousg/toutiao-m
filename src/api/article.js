@@ -28,6 +28,5 @@ export const getSuggestion = (q) => {
  * @param {*} params 查询参数对象 page 当前页 per_page 一页多少条 q 搜索关键字
  */
 export const getSearchResult = (params) => {
-  console.log(params)
   return request.get('search', { params })
 }

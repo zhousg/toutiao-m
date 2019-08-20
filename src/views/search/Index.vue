@@ -23,7 +23,7 @@
         >清空历史记录</van-button>
       </div>
     </div>
-    <van-cell-group v-else>
+    <van-cell-group v-else-if="q">
       <van-cell
         v-for="item in suggestion"
         :key="item"
@@ -52,13 +52,13 @@ export default {
   },
   watch: {
     q (nowVal, oldVal) {
-      if (!nowVal.trim()) return false
       window.clearTimeout(this.timer)
       this.timer = setTimeout(async () => {
+        if (!nowVal.trim()) return false
         // 用户停止输入后 200ms 联想查询
         const {
           data: { data }
-        } = await getSuggestion(this.q)
+        } = await getSuggestion(nowVal.trim())
         this.suggestion = data.options
       }, 200)
     }
