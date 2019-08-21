@@ -1,13 +1,8 @@
 <template>
   <div class="home-wrapper">
     <van-tabs :lazy-render="false" v-model="activeId" @change="changeChannel()" swipeable>
-      <van-tab
-        v-for="item in channels"
-        :key="item.id"
-        :name="item.id"
-        :title="item.name"
-      >
-        <div class="scroll-wrapper" ref="scroll-wrapper"  @scroll="scroll">
+      <van-tab v-for="item in channels" :key="item.id" :name="item.id" :title="item.name">
+        <div class="scroll-wrapper" ref="scroll-wrapper" @scroll="scroll">
           <van-pull-refresh
             :success-text="refreshSuccessText"
             v-model="item.downLoading"
@@ -21,7 +16,22 @@
               :offset="100"
               @load="onLoad(item.id)"
             >
-              <van-cell v-for="art in item.articles" :key="art.art_id" :title="art.title" />
+              <van-cell v-for="art in item.articles" :key="art.art_id" @click="$router.push('/detail/'+art.art_id)">
+                <p class="title van-ellipsis">{{art.title}}</p>
+                <van-image
+                  :width="art.cover.type === 1 ? '100%' : '33.3333%'"
+                  fit="cover"
+                  v-for="(imgUrl,i) in art.cover.images"
+                  :key="i"
+                  :src="imgUrl"
+                  lazy-load
+                />
+                <p class="footer">
+                  <span>{{art.aut_name}}</span>
+                  <span>{{art.comm_count}}评论</span>
+                  <span>{{art.pubdate|calcTime}}</span>
+                </p>
+              </van-cell>
             </van-list>
           </van-pull-refresh>
         </div>
@@ -159,27 +169,47 @@ export default {
   width: 100%;
   overflow-y: auto;
   /* 注意：有下拉加载效果需要基于滚动条 */
-.van-tabs{
+  .van-tabs {
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
-     /deep/ .van-tabs__wrap{
-       padding-right: 32px;
-     }
-    /deep/ .van-tabs__wrap{
+    /deep/ .van-tabs__wrap {
+      padding-right: 32px;
+    }
+    /deep/ .van-tabs__wrap {
       height: 32px;
     }
-    /deep/ .van-tabs__content{
+    /deep/ .van-tabs__content {
       flex: 1;
       overflow: hidden;
     }
-    /deep/ .van-tab__pane{
+    /deep/ .van-tab__pane {
       height: 100%;
       overflow: hidden;
-      .scroll-wrapper{
+      .scroll-wrapper {
         height: 100%;
-        overflow-y: auto
+        overflow-y: auto;
+      }
+    }
+  }
+}
+.van-cell {
+  padding: 10px;
+  .van-image {
+    height: 100px;
+  }
+  p {
+    margin: 0;
+    &.title {
+      font-size: 16px;
+      color: #555;
+    }
+    &.footer {
+      font-size: 12px;
+      color: #ccc;
+      span {
+        padding-right: 10px;
       }
     }
   }
