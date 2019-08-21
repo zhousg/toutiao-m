@@ -13,7 +13,7 @@
 
 <script>
 import { login } from '@/api/user'
-import { userLocal } from '@/utils/local'
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -22,12 +22,13 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     async login () {
       const {
         data: { data }
       } = await login(this.mobile, this.code)
       // 存储token
-      userLocal.setUser(data)
+      this.setUser(data)
       if (this.$route.query.returnUrl) {
         this.$router.replace(this.$route.query.returnUrl)
       } else {

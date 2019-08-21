@@ -1,24 +1,20 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
-import { getMyChannel } from '@/api/channel'
+import { userLocal } from '@/utils/local'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    // 我的频道数据
-    myChannel: []
+    user: userLocal.getUser()
   },
   mutations: {
-    // 修改我的频道数据
-    setMyChannel (state, payLoad) {
-      state.myChannel = payLoad
-    }
-  },
-  actions: {
-    // 获取我的频道数据
-    async getMyChannel (context, payLoad) {
-      const { data: { data } } = await getMyChannel()
-      context.commit('setMyChannel', data.channels)
+    setUser (state, user) {
+      state.user = user
+      userLocal.setUser(user)
+    },
+    removeUser (state) {
+      state.user = null
+      userLocal.removeUser()
     }
   }
 })

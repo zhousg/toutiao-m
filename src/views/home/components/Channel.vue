@@ -8,16 +8,17 @@
       <van-button
         @click="del(item.id)"
         :key="item.id"
-        v-for="item in myChannel"
+        v-for="item in channels"
         icon="close"
         size="small"
         type="default"
+        :style="item.id===value?{color:'red'}:null"
       >{{item.name}}</van-button>
     </div>
     <div class="item">
       <p>推荐频道：</p>
       <van-button
-        @click="add(item.id,index)"
+        @click="add(item,index)"
         :key="item.id"
         v-for="(item,index) in recommendChannel"
         icon="add-o"
@@ -30,10 +31,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
 import { getAllChannel, addMyChannel, delMyChannel } from '@/api/channel'
 export default {
   name: 'my-tag',
+  props: ['channels', 'value'],
   data () {
     return {
       open: false,
@@ -41,15 +42,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['myChannel']),
     recommendChannel () {
       return this.allChannel.filter(allItem => {
-        if (!this.myChannel.find(myItem => allItem.id === myItem.id)) return allItem
+        if (!this.channels.find(myItem => allItem.id === myItem.id)) return allItem
       })
     }
   },
   methods: {
-    ...mapActions(['getMyChannel']),
     openSheet () {
       this.open = true
       this.getAllChannel()
@@ -62,11 +61,33 @@ export default {
     },
     async del (id) {
       await delMyChannel(id)
-      this.getMyChannel()
+      this.channels.splice(this.channels.findIndex(item => item.id === id), 1)
+      // 修改父组件数据
+      this.$emit('update', this.channels)
+      // 如果是删除激活的频道  回到推荐频道
+      this.$emit('input', 0)
     },
-    async add (id, index) {
-      await addMyChannel({ id, seq: this.myChannel.length + 1 })
-      this.getMyChannel()
+    async add (item, index) {
+      // 其实是修改 保证后端排序和前端序号一致
+      const items = this.channels.map((item, i) => ({ id: item.id, seq: i + 1 }))
+      items.push({ id: item.id, seq: items.length + 1 })
+      // 删除推荐
+      items.splice(0, 1)
+      // 修改请求
+      await addMyChannel(items)
+      // 修改父组件数据
+      this.channels.push({
+        id: item.id,
+        name: item.name,
+        articles: [],
+        upLoading: false,
+        finished: false,
+        downLoading: false,
+        timestamp: Date.now(),
+        scrollTop: 0
+      })
+      // 修改父组件数据
+      this.$emit('update', this.channels)
     }
   }
 }
@@ -85,8 +106,8 @@ export default {
   }
 }
 .bar_btn {
-  width: 30px;
-  height: 29px;
+  width: 32px;
+  height: 31px;
   position: absolute;
   top: 0;
   right: 0;

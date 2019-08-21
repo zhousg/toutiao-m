@@ -8,8 +8,8 @@ export const getMyChannel = () => {
   return request.get('user/channels')
 }
 
-export const addMyChannel = (item) => {
-  return request.patch('user/channels', { channels: [item] })
+export const addMyChannel = (items) => {
+  return request.put('user/channels', { channels: items })
 }
 
 export const delMyChannel = (id) => {

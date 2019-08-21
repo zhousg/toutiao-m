@@ -1,55 +1,46 @@
-// 样式覆盖
-.van-tabbar{
-  background: #f5f5f5;
-}
-// .van-tabbar-item{
-//   color: #fff;
-// }
+@color:#3296fa;
+// 顶部通栏
 .van-nav-bar{
   background: @color;
-  img{
-    width: 100px;
-    height: 45px;
-    object-fit: contain;
-  }
 }
 .van-nav-bar .van-icon,
 .van-nav-bar__text,
 .van-nav-bar__title{
   color: #fff;
 }
-.van-tabbar-item--active{
-  color: @color;
-  // text-shadow: 0 0 5px black;
-}
-
-.van-tabs--line .van-tabs__wrap{
-  height: 30px;
-}
-.van-tab{
-  line-height: 30px;
-  font-size: 12px;
-}
-.van-tabs__line{
-  background-color: @color;
-  height: 2px;
-}
-
 .van-nav-bar__text {
   font-size: 12px;
   &:active {
     background: #3296fa;
   }
 }
-
+// 底部页签
+.van-tabbar{
+  background: #f5f5f5;
+}
+.van-tabbar-item--active{
+  color: @color;
+}
+// 频道页签
+.van-tab{
+  line-height: 32px;
+  font-size: 12px;
+}
+.van-tabs--line .van-tabs__wrap{
+  height: 32px;
+}
+.van-tabs__line{
+  background-color: @color;
+  height: 2px;
+}
+// 全局样式
+#app{
+  font-size: 12px;
+}
 h3{
   margin: 0;
   padding: 0;
 }
 pre{
   white-space: pre-wrap;
-}
-
-#app{
-  font-size: 12px;
 }

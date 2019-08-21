@@ -4,6 +4,7 @@ import request from '@/utils/request'
  * @param {Object} data - 参数对象 包含channel_id，timestamp，with_top
  */
 export const getArticles = data => {
+  data.with_top = 1
   return request.get('http://ttapi.research.itcast.cn/app/v1_1/articles', { params: data })
 }
 

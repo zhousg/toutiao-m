@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import { userLocal } from '@/utils/local'
 import { getUserInfo } from '@/api/user'
+import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
@@ -57,8 +57,9 @@ export default {
     this.getUserInfo()
   },
   methods: {
+    ...mapMutations(['removeUser']),
     logout () {
-      userLocal.removeUser()
+      this.removeUser({})
       this.$router.push('/login')
     },
     async getUserInfo () {
